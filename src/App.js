@@ -53,41 +53,62 @@ resetScore () {
 }
 newQuestion () {
   this.componentDidMount()
-  this.toggleQuestion()
+  this.setState({ isHidden: false })
 }
 
-render () {
-  const {isLoaded, items} = this.state;
-  if(!isLoaded) {
-    return <div>No Data!</div>
+render() {
+  const { isLoaded, items } = this.state;
+  if (!isLoaded) {
+    return <div>No Data!</div>;
   } else {
-  return (
-    console.log(items),
-    <div className="App">
-       <h1>Welcome to Jeopardy</h1>
-       <br />
-       <h2>Score: {this.state.Score}</h2>
-       <button onClick={this.decreaseScore}>Decrease</button>
-       <button onClick={this.increaseScore}>Increase</button>
-       <button onClick={this.resetScore}>Reset</button><br /><br />
-       <h2>Lets Play!</h2><br />
+    return (
+      <div className="App">
+        <br />
+        <h2 className='h2'>Let's Play!</h2>
+        <br />
 
-       <button className="button" onClick={this.newQuestion}>New Question</button>
-       <h2>Category: {items[0].category.title}</h2><br />
-      <h2>Points: {items[0].value}</h2>
+        <div className="card-container">
+          {/* Score card */}
+          <div className="card">
+            <div className="card__face card__face--front">
+              <h2 className='h2'>Score: {this.state.Score}</h2>
+              <button onClick={this.decreaseScore}>Decrease</button><br />
+              <button onClick={this.increaseScore}>Increase</button><br />
+              <button onClick={this.resetScore}>Reset</button>
+            </div>
+          </div>
 
-       {this.state.isHidden && (
-        <div>
-           <h3>Answer: {items[0].answer}</h3> <br /><br />
+          {/* New Question button */}
+          <button className="button" onClick={this.newQuestion}>
+            New Question
+          </button>
+
+          {/* Question and answer card */}
+          <div className={`card ${this.state.isHidden ? "flipped" : ""}`}>
+            <div className="card__face card__face--front">
+              <h2>Category: {items[0].category.title}</h2>
+              <br />
+              <h2>Points: {items[0].value}</h2>
+              <h3>Question: {items[0].question}</h3>
+              <button className="button" onClick={this.toggleQuestion}>
+                Reveal Answer
+              </button>
+            </div>
+            <div className="card__face card__face--back">
+              <h3>Answer: {items[0].answer}</h3>
+              <button className="button" onClick={this.toggleQuestion}>
+                Hide Answer
+              </button>
+            </div>
+          </div>
         </div>
-        )}
-       <h3>Question: {items[0].question}</h3><br /><br /> 
-        <button className="button" onClick={this.toggleQuestion}>Reveal Answer</button> 
-    </div>
-  )
+      </div>
+    );
+  }
 }
 }
-}
+
+
 
 
 export default App;
