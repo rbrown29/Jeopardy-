@@ -63,6 +63,7 @@ render() {
   } else {
     return (
       <div className="App">
+        <h1 className='h1'>Jeopardy!</h1>
         <br />
         <h2 className='h2'>Let's Play!</h2>
         <br />
